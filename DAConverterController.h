@@ -1,7 +1,7 @@
-#ifndef DAConverterController_h
-#define DAConverterController_h
+#ifndef DACONVERTERCONTROLLER_H
+#define DACONVERTERCONTROLLER_H
 
-#define CHANNEL 8      //チャンネル数
+#define CHANNEL 8      //チャネル数
 
 /*
  * LTC1600CNを用いてSPI通信を行うためのクラス
@@ -11,14 +11,14 @@ class DAConverterController{
 		DAConverterController(int cs);
    
     /*
-     * 1つのみ or デイジーチェーンで接続されたスレーブにデータを転送する
-     * @param address アドレス(チャンネル)
-     * @param inputs マイコンに送信するデータ配列．要素番号が小さい先に送信される．送信データの範囲(0x000~0x3FF)
+     * LTC1660CNにデータを送信する
+     * @param address アドレス(チャンネル) (1~8)
+     * @param inputs マイコンに送信するデータ，送信データの範囲(0x000~0x3FF)
      * @return なし
      */
 		void Write(int address, short input);
    private:
-    int cs;      //使用するLTC1600CNの総数
+    int cs;      //Arduinoと接続しているピン
 };
 
 #endif

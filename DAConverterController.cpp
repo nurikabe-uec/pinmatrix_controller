@@ -20,8 +20,7 @@ DAConverterController::DAConverterController(int cs){
 
 void DAConverterController::Write(int address, short input){
   short spiData = 0;
-
-  //シフトしながらデータを送信
+  
   digitalWrite(this->cs, LOW);
   spiData = (address << 12) | ((input & 0x3FF) << 2);
   SPI.transfer16(spiData);

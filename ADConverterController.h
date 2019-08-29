@@ -1,24 +1,23 @@
-#ifndef ADConverterController_h
-#define ADConverterController_h
+#ifndef ADCONVERTERCONTROLLER_H
+#define ADCONVERTERCONTROLLER_H
 
-#define CHANNEL 8      //チャンネル数
+#define CHANNEL 8      //チャネル数
 
 /*
- * LTC1600CNを用いてSPI通信を行うためのクラス
+ * MCP3208を用いてSPI通信を行うためのクラス
  */
 class ADConverterController{
   public:
     ADConverterController(int cs);
    
     /*
-     * 1つのみ or デイジーチェーンで接続されたスレーブにデータを転送する
-     * @param address アドレス(チャンネル)
-     * @param inputs マイコンに送信するデータ配列．要素番号が小さい先に送信される．送信データの範囲(0x000~0x3FF)
+     * MCP3208からデータを受信する
+     * @param address アドレス(チャネル) (1~8)
      * @return なし
      */
     int Read(int address);
    private:
-    int cs;      //使用するLTC1600CNの総数
+    int cs;      //Arduinoと接続しているピン
 };
 
 #endif
