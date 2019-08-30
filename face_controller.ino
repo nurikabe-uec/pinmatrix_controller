@@ -24,71 +24,109 @@ ADConverterController adCon1 = ADConverterController(MCP3208_CS1);
 ADConverterController adCon2 = ADConverterController(MCP3208_CS2);
 
 /* モータを制御
- * @param photoEncoder 読み取るエンコーダ
- * @param adCon 制御したいモータに接続しているDAコンバータ
- * @param address 制御したモータのピン番号(0, 2, 4, 6)
- * @param target 目標値
-  */
-void SetMotor(PhotoEncoder photoEncoder, DAConverterController daCon, int address, int target){
+   @param photoEncoder 読み取るエンコーダ
+   @param adCon 制御したいモータに接続しているDAコンバータ
+   @param address 制御したモータのピン番号(0, 2, 4, 6)
+   @param target 目標値
+*/
+void SetMotor(PhotoEncoder photoEncoder, DAConverterController daCon, int address, int target) {
   if (target > photoEncoder.value) {
-      photoEncoder.SetState(FORWARD_ROTATION);
-      daCon.Write(address, 0x3FF);
-      daCon.Write(address + 1, 0);
+    photoEncoder.SetState(FORWARD_ROTATION);
+    daCon.Write(address, 0x3FF);
+    daCon.Write(address + 1, 0);
   } else if (target < photoEncoder.value) {
-      photoEncoder.SetState(REVERSE_ROTATION);
-      daCon.Write(address, 0);
-      daCon.Write(address + 1, 0x3FF);
+    photoEncoder.SetState(REVERSE_ROTATION);
+    daCon.Write(address, 0);
+    daCon.Write(address + 1, 0x3FF);
   } else {
-      daCon.Write(address, 0x3FF);
-      daCon.Write(address + 1, 0x3FF);
+    daCon.Write(address, 0x3FF);
+    daCon.Write(address + 1, 0x3FF);
   }
 }
+
+void _debug_SetMotor(PhotoEncoder photoEncoder, DAConverterController daCon, int address, int flag) {
+  if (flag == FORWARD_ROTATION) {
+    photoEncoder.SetState(FORWARD_ROTATION);
+    daCon.Write(address, 0x3FF);
+    daCon.Write(address + 1, 0);
+  } else if (flag == REVERSE_ROTATION) {
+    photoEncoder.SetState(REVERSE_ROTATION);
+    daCon.Write(address, 0);
+    daCon.Write(address + 1, 0x3FF);
+  } else {
+    daCon.Write(address, 0x3FF);
+    daCon.Write(address + 1, 0x3FF);
+  }
+}
+
+
 
 int target = 0;
 PhotoEncoder photoEncoder[16];
 
 /*******************************************************************************************************************************/
 
-void setup(){ 
+void setup() {
   Serial.begin(115200);
-  for(int index = 0; index < 16; index++){
+  for (int index = 0; index < 16; index++) {
     photoEncoder[index] = PhotoEncoder(millis());
   }
 }
 
-void loop(){
-
-  // TODO:目標値の設定方法を変更
-  if (Serial.available() > 0) {
-    String target_str = Serial.readString();
-    target = target_str.toInt();
-  }
-
-  //16個のフォトインタラプタからデータを受信する
-  int receivedData[16];
-  for(int index = 0; index < 16; index++){
-    if(index < 8) receivedData[index] = adCon1.Read(index+1);   //adCon1の1~8ピンの受信データを格納
-    else  receivedData[index] = adCon2.Read(index-7);           //adCon2の1~8ピンの受信データを格納                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
-  }
-  //Serial.println(dt1[0]);
-
-  //16個のモータを制御する(16個のモータに制御信号を送信する)
-  for(int index = 0; index < 16; index++){
-    if(receivedData[index] < MV4200){
-      photoEncoder[index].Count(millis());
-    }
+// for debug
+void loop() {
+  //16個のモータを制御する(8個のモータに制御信号を送信する)
+  for(int index = 1; index < 8; index++){
 
     // TODO:目標値targetの変更
     if(index < 4){
-      SetMotor(photoEncoder[index], daCon1, index * 2, target);
+      _debug_SetMotor(photoEncoder[index], daCon1, 2 * index - 1, REVERSE_ROTATION);
     }else if(index < 8){
-      SetMotor(photoEncoder[index], daCon2, (index - 4) * 2, target);
+      _debug_SetMotor(photoEncoder[index], daCon2, 2 * (index - 3) - 1, REVERSE_ROTATION);
     }else if(index < 12){
-      SetMotor(photoEncoder[index], daCon3, (index - 8) * 2, target);
+      _debug_SetMotor(photoEncoder[index], daCon3, 2 * (index - 7) - 1, REVERSE_ROTATION);
     }else{
-      SetMotor(photoEncoder[index], daCon4, (index - 12) * 2, target);
+      _debug_SetMotor(photoEncoder[index], daCon4, (index - 11) * 2, REVERSE_ROTATION);
     }
   }
-  
+  //_debug_SetMotor(photoEncoder[0], daCon2, 7, REVERSE_ROTATION);
   delay(500);
 }
+
+//
+//void loop(){
+//
+//  // TODO:目標値の設定方法を変更
+//  if (Serial.available() > 0) {
+//    String target_str = Serial.readString();
+//    target = target_str.toInt();
+//  }
+//
+//  //16個のフォトインタラプタからデータを受信する
+//  int receivedData[16];
+//  for(int index = 0; index < 16; index++){
+//    if(index < 8) receivedData[index] = adCon1.Read(index+1);   //adCon1の1~8ピンの受信データを格納
+//    else  receivedData[index] = adCon2.Read(index-7);           //adCon2の1~8ピンの受信データを格納
+//  }
+//  //Serial.println(dt1[0]);
+//
+//  //16個のモータを制御する(16個のモータに制御信号を送信する)
+//  for(int index = 0; index < 16; index++){
+//    if(receivedData[index] < MV4200){
+//      photoEncoder[index].Count(millis());
+//    }
+//
+//    // TODO:目標値targetの変更
+//    if(index < 4){
+//      SetMotor(photoEncoder[index], daCon1, index * 2, target);
+//    }else if(index < 8){
+//      SetMotor(photoEncoder[index], daCon2, (index - 4) * 2, target);
+//    }else if(index < 12){
+//      SetMotor(photoEncoder[index], daCon3, (index - 8) * 2, target);
+//    }else{
+//      SetMotor(photoEncoder[index], daCon4, (index - 12) * 2, target);
+//    }
+//  }
+//
+//  delay(500);
+//}
