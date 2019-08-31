@@ -8,7 +8,7 @@ DAConverterController::DAConverterController(int cs){
   digitalWrite(cs, HIGH);
 
   SPI.setBitOrder(MSBFIRST);
-  SPI.setClockDivider(SPI_CLOCK_DIV8);
+  SPI.setClockDivider(SPI_CLOCK_DIV2);
   SPI.setDataMode(SPI_MODE0);
   SPI.begin();
 

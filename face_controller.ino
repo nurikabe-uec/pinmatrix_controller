@@ -74,23 +74,32 @@ void setup() {
 }
 
 // for debug
+int dir = 1;
 void loop() {
-  //16個のモータを制御する(8個のモータに制御信号を送信する)
-  for(int index = 1; index < 8; index++){
+  //8個のモータを制御する(8個のモータに制御信号を送信する)
+//
+//    _debug_SetMotor(photoEncoder[0], daCon1, 1, 2);
+//    _debug_SetMotor(photoEncoder[1], daCon1, 3, 2);
+//    _debug_SetMotor(photoEncoder[2], daCon1, 5, 1);
+//    _debug_SetMotor(photoEncoder[3], daCon1, 7, 1);
+//
+//    _debug_SetMotor(photoEncoder[4], daCon2, 1, 2);
+//    _debug_SetMotor(photoEncoder[5], daCon2, 3, 2);
+//    _debug_SetMotor(photoEncoder[6], daCon2, 5, 1);
+//    _debug_SetMotor(photoEncoder[7], daCon2, 7, 1);
 
-    // TODO:目標値targetの変更
-    if(index < 4){
-      _debug_SetMotor(photoEncoder[index], daCon1, 2 * index - 1, REVERSE_ROTATION);
-    }else if(index < 8){
-      _debug_SetMotor(photoEncoder[index], daCon2, 2 * (index - 3) - 1, REVERSE_ROTATION);
-    }else if(index < 12){
-      _debug_SetMotor(photoEncoder[index], daCon3, 2 * (index - 7) - 1, REVERSE_ROTATION);
-    }else{
-      _debug_SetMotor(photoEncoder[index], daCon4, (index - 11) * 2, REVERSE_ROTATION);
-    }
-  }
-  //_debug_SetMotor(photoEncoder[0], daCon2, 7, REVERSE_ROTATION);
-  delay(500);
+    _debug_SetMotor(photoEncoder[0], daCon1, 1, 1);
+    _debug_SetMotor(photoEncoder[1], daCon1, 3, 1);
+    _debug_SetMotor(photoEncoder[2], daCon1, 5, 2);
+    _debug_SetMotor(photoEncoder[3], daCon1, 7, 2);
+
+    _debug_SetMotor(photoEncoder[4], daCon2, 1, 1);
+    _debug_SetMotor(photoEncoder[5], daCon2, 3, 1);
+    _debug_SetMotor(photoEncoder[6], daCon2, 5, 2);
+    _debug_SetMotor(photoEncoder[7], daCon2, 7, 2);
+
+
+  delayMicroseconds(1);
 }
 
 //
