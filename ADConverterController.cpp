@@ -8,7 +8,7 @@ ADConverterController::ADConverterController(int cs){
   digitalWrite(cs, HIGH);
 
   SPI.setBitOrder(MSBFIRST);
-  SPI.setClockDivider(SPI_CLOCK_DIV2);
+    SPI.setClockDivider(SPI_CLOCK_DIV2);
   SPI.setDataMode(SPI_MODE0);
   SPI.begin();
 }
@@ -22,5 +22,5 @@ int ADConverterController::Read(int address){
   digitalWrite(this->cs, HIGH);
   //Serial.println(data2);
 
-  return (data1 & 0x0F)*256 +data2;
+  return ((data1 & 0x0F) << 8) +data2;
 }

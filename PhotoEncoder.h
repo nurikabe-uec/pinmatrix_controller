@@ -1,10 +1,8 @@
 #ifndef PHOTOENCODER_H
 #define PHOTOENCODER_H
 
-#define MV4000 816 // 10bit に 5V を対応させた場合 4V は 816
-#define MV4200 1700
-#define MV4250 867
-#define MV4500 918
+#define MV2000 1700 // MCP は 12bit
+#define MV2350 1925
 
 enum State{
   FORWARD_ROTATION = 1,
