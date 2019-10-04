@@ -7,7 +7,7 @@
 #define PIN_SPI_SCK 13     //SCK
 
 // TODO:接続しやすいピン番号に変更
-#define LTC1660_CS1 4      //DAコンバータLTC1660のCS
+#define LTC1660_CS1 10      //DAコンバータLTC1660のCS
 #define LTC1660_CS2 5      //DAコンバータLTC1660のCS
 #define LTC1660_CS3 6      //DAコンバータLTC1660のCS
 #define LTC1660_CS4 7      //DAコンバータLTC1660のCS
@@ -93,6 +93,7 @@ int debug_target = 100;
 int _time = 0;
 int dir = 1;
 
+// モーターを上にあげるDebug
 void _debug_Up() {
   _debug_SetMotor_NC(photoEncoder[0], daCon1, 1, 1);
   _debug_SetMotor_NC(photoEncoder[1], daCon1, 3, 1);
