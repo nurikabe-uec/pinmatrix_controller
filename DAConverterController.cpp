@@ -1,16 +1,14 @@
+#include <Arduino.h>
 #include "DAConverterController.h"
 #include <SPI.h>
 
 DAConverterController::DAConverterController(int cs){
   this->cs = cs;
-  
-  pinMode(cs, OUTPUT);
-  digitalWrite(cs, HIGH);
 
-  SPI.setBitOrder(MSBFIRST);
-  SPI.setClockDivider(SPI_CLOCK_DIV8);
+  SPI.begin(PIN_SPI_SCK, PIN_SPI_MISO, PIN_SPI_MOSI, cs);
+  SPI.setFrequency(1000000);
   SPI.setDataMode(SPI_MODE0);
-  SPI.begin();
+  SPI.setHwCs(true);
 
   //全てのアドレスの出力を0に設定する
   for(int address = 1; address < CHANNEL; address++){

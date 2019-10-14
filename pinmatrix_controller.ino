@@ -2,13 +2,9 @@
 #include "ADConverterController.h"
 #include "PhotoEncoder.h"
 
-#define PIN_SPI_MOSI 11    //DIN
-#define PIN_SPI_MISO 12    //DOUT
-#define PIN_SPI_SCK 13     //SCK
-
 // TODO:接続しやすいピン番号に変更
-#define LTC1660_CS1 10      //DAコンバータLTC1660のCS
-#define LTC1660_CS2 5      //DAコンバータLTC1660のCS
+#define LTC1660_CS1 5      //DAコンバータLTC1660のCS
+#define LTC1660_CS2 17      //DAコンバータLTC1660のCS
 #define LTC1660_CS3 6      //DAコンバータLTC1660のCS
 #define LTC1660_CS4 7      //DAコンバータLTC1660のCS
 

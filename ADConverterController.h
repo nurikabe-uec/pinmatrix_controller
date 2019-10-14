@@ -8,6 +8,9 @@
  */
 class ADConverterController{
   public:
+    const int PIN_SPI_MOSI = 23;
+    const int PIN_SPI_MISO = 19;
+    const int PIN_SPI_SCK = 18;
     ADConverterController(int cs);
    
     /*
