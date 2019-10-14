@@ -69,14 +69,14 @@ void loop(){
   //Serial.println(dt1[0]);
 
   //16個のモータを制御する(16個のモータに制御信号を送信する)
-  for(int index = 0; index < 16; index++){
+  for(int index = 1; index <= 16; index++){
     if(receivedData[index] < MV4200){
       photoEncoder[index].Count(millis());
     }
 
     // TODO:目標値targetの変更
     if(index < 4){
-      SetMotor(photoEncoder[index], daCon1, index * 2, target);
+      SetMotor(photoEncoder[index], daCon1, 2 * index - 1, target);
     }else if(index < 8){
       SetMotor(photoEncoder[index], daCon2, (index - 4) * 2, target);
     }else if(index < 12){
