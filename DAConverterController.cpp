@@ -1,5 +1,6 @@
 #include "DAConverterController.h"
 #include <SPI.h>
+#include <Arduino.h>
 
 DAConverterController::DAConverterController(int cs){
   this->cs = cs;

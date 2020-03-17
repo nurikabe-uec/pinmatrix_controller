@@ -1,5 +1,6 @@
 #include "ADConverterController.h"
 #include <SPI.h>
+#include <Arduino.h>
 
 ADConverterController::ADConverterController(int cs){
   this->cs = cs;
