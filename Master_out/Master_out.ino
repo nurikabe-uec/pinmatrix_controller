@@ -1,9 +1,10 @@
 //8ビット分まって1バイトにする
 
-#define DATAPIN   (19) // 74HC595のDSへ
+#define DATAPIN   (19)   // 74HC595のDSへ
 #define LATCH_OUT  (18)  // 74HC595のST_CPへ
-#define CLOCKPIN  (5) // 74HC595のSH_CPへ
-
+#define CLOCKPIN  (5)    // 74HC595のSH_CPへ
+#define HEAD_OUT (26)    // 8bitの先頭を示すためのピン
+  
 #define OUTPUTDATA 127
 
 bool flip = false;
@@ -16,15 +17,16 @@ void setup(){
 }
 
 void loop(){
+  digitalWrite(HEAD_OUT, HIGH);
   for( int i = 7; i >= 0; i-- ){
     digitalWrite(LATCH_OUT, LOW);
     myShiftOut( DATAPIN, CLOCKPIN, i, (byte)OUTPUTDATA );
-//    byte out_data = flip ? B11111111 : B00000000;
-//    shiftOut( DATAPIN, CLOCKPIN, MSBFIRST, out_data );
     digitalWrite(LATCH_OUT, HIGH);
-    delay(100);
+    delay(10);
 //    flip = !flip;
   }
+  digitalWrite(HEAD_OUT, LOW);
+  delay(10);
 }
 
 void myShiftOut( int dataPin, int clockPin, int bitNo, byte value ){
