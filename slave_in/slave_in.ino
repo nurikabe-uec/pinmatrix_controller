@@ -11,9 +11,10 @@ short count = 0;
 void setup(){
   pinMode(LATCH_IN, INPUT);
   pinMode(INPUTPIN, INPUT);
+  pinMode(HEAD_IN, INPUT);
   Serial.begin(115200);
-  attachInterrupt(LATCH_IN, toint, RISING);
   attachInterrupt(HEAD_IN, resetCount, RISING);
+  attachInterrupt(LATCH_IN, toint, RISING);
 }
 
 void loop(){
@@ -33,6 +34,7 @@ void toint(){
 }
 
 void resetCount() {
+  //Serial.println("resetCount");
   count = 0;
-}
+  val = 0;
 }
