@@ -1,7 +1,7 @@
 
-HardwareSerial Ser1(2);
+HardwareSerial Ser1(2); // UART2 : RX 16, TX 17
 
-#define CLK (2)
+#define CLK (4)
 //#define TXPIN (1) //出す
 //#define RXPIN (3) //入る
 
@@ -11,11 +11,12 @@ byte inByte3[17] = {(byte)13, (byte)23, (byte)33, (byte)43, (byte)53, (byte)63, 
 
 void setup(){
   pinMode(CLK, OUTPUT);
-  Serial.begin(115200);
-  Ser1.begin(115200);
+  Serial.begin(9600);
+  Ser1.begin(9600);
 }
 
 void loop(){
+  delay(1000); // receive側のserialprintが重いからdelayしてる　モータにつなげたら消す？？
   digitalWrite(CLK, HIGH);
   for(int i = 0; i < 17; i++){
     Ser1.write(inByte1[i]);
@@ -23,6 +24,7 @@ void loop(){
       digitalWrite(CLK, LOW);
     }
   }
+  delay(1000);
   digitalWrite(CLK, HIGH);
   for(int i = 0; i < 17; i++){
     Ser1.write(inByte2[i]);
@@ -30,6 +32,7 @@ void loop(){
       digitalWrite(CLK, LOW);
     }
   }
+  delay(1000);
   digitalWrite(CLK, HIGH);
   for(int i = 0; i < 17; i++){
     Ser1.write(inByte3[i]);
