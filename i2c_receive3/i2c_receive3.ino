@@ -1,8 +1,9 @@
 //#include <SoftwareSerial.h>
-#define myAddress 11
+#define myAddress 13
 #define CLOCKPIN  2
 HardwareSerial mySerial(2); // UART2 : RX 16, TX 17
 volatile byte pinsData[16];
+int inByte;
 void setup() {
   Serial.begin(9600);
   mySerial.begin(9600);

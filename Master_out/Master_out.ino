@@ -11,7 +11,7 @@ void setup(){
   pinMode(LATCH_OUT, OUTPUT);
   pinMode(CLOCKPIN, OUTPUT);
   pinMode(HEAD_OUT, OUTPUT);
-  Serial.begin(115200);
+  Serial.begin(9600);
 }
 void loop(){
   digitalWrite(HEAD_OUT, HIGH);
